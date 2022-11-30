@@ -1,0 +1,24 @@
+create a lavarel project
+    -composer create-project laravel/laravel projectname
+    -composer require laravel/ui
+    -php artisan ui bootstrap --auth
+    -npm install
+    -npm run dev
+
+working:
+run in 2 terminals:
+    npm run dev
+    php artisan serve
+to do anything with database, first run:
+    php artisan migrate
+when creating a table in database, run:
+    php artisan make:migration create_[name]_table
+    php artisan make:migration add_lastname_to_users --table=users ???
+
+$table->unique([' ', ' ']);
+$table->index(' ');
+$table->foreign('company_id')->references('id')->on('companies')
+                  ->onUpdate('cascade');
+
+php artisan make:model Company
+php artisan make:model Series
