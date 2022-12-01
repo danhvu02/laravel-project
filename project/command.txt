@@ -23,3 +23,13 @@ $table->foreign('company_id')->references('id')->on('companies')
 
 php artisan make:model Company
 php artisan make:model Series
+
+video 2:
+php artisan make:controller CompanyController --resource
+php artisan make:controller SeriesController --resource
+php artisan route:list
+
+php artisan config:clear
+php artisan route:clear
+
+composer require laravelcollective/html
