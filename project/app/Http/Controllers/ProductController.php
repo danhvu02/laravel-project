@@ -19,8 +19,11 @@ class ProductController extends Controller
 
     public function create()
     {
-        //show a webform to add a new category
-        return view('products.create');
+        //display tables of all categories
+        $categories = \App\Models\Category::all()->sortBy("category");
+
+        //show a webform to add a new product with dropdown option for category id
+        return view('products.create')->with('categories', $categories);
     }
 
 
@@ -35,12 +38,22 @@ class ProductController extends Controller
             'price' => 'required',
             'quantity' => 'required',
             'sku' => 'required|max:50',
-            'picture' => 'required|max:100'
+            'picture' => 'required|mimes:jpg,png,jeg|max:5048'
         ];
         $validator = $this->validate($request, $rules);
 
+        $newPictureName = time() . '-' . $request->name . '.' . 
+        $request->picture->extension();
+        $request->picture->move(public_path('images'), $newPictureName);
+
         $product = new \App\Models\Product;
-        $product->product = $request->product;
+        $product->category_id = $request->category_id;
+        $product->title = $request->title;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
+        $product->sku = $request->sku;
+        $product->picture = $request->picture;
         $product->save();
 
         Session::flash('success','A new product has been created');
@@ -56,9 +69,13 @@ class ProductController extends Controller
 
     public function edit($id)
     {
+
+        //display tables of all categories
+        $categories = \App\Models\Category::all()->sortBy("category");
+
         //show a web form to edit a product with values pre-filled ($id)
         $product = \App\Models\Product::find($id);
-        return view('products.edit')->with('product', $product);
+        return view('products.edit')->with('product', $product)->with('categories', $categories);
     }
 
 
@@ -72,12 +89,20 @@ class ProductController extends Controller
             'price' => 'required',
             'quantity' => 'required',
             'sku' => 'required|max:50',
-            'picture' => 'required|max:100'.$id
+            'picture' => 'required|mimes:jpg,png,jeg|max:5048'.$id
         ];
         $validator = $this->validate($request, $rules);
 
+        
+
         $product = \App\Models\Product::find($id);
-        $product->product = $request->product;
+        $product->category_id = $request->category_id;
+        $product->title = $request->title;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
+        $product->sku = $request->sku;
+        $product->picture = $request->picture;
         $product->save();
 
         Session::flash('success','The product has been updated');
