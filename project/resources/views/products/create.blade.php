@@ -34,3 +34,15 @@
     {{ Form::submit('Add Product', ['class'=> 'btn btn-primary btn-lg btn-block', 'style'=>'margin-top:20px'])}}
     {!! Form::close() !!}
 </div>
+
+</div>
+</div>
+</div>
+</div>
+@endsection
+
+@section('scripts')
+@endsection
+
+@section('css')
+@endsection
